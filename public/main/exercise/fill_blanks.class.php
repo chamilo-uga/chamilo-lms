@@ -573,7 +573,8 @@ class FillBlanks extends Question
 
                 $resultOptions = ['' => '--'];
                 foreach ($listMenu as $item) {
-                    $resultOptions[sha1($item)] = $item;
+                    // Use htmlentities to safely display answers with HTML-like content
+                    $resultOptions[sha1($item)] = htmlentities($item);
                 }
 
                 foreach ($resultOptions as $key => $value) {
@@ -715,14 +716,12 @@ class FillBlanks extends Question
                     },
                     $listSeveral
                 );
-                //$studentAnswer = htmlspecialchars($studentAnswer);
                 $result = in_array($studentAnswer, $listSeveral);
 
                 break;
             case self::FILL_THE_BLANK_STANDARD:
             default:
                 $correctAnswer = api_html_entity_decode($correctAnswer);
-                //$studentAnswer = htmlspecialchars($studentAnswer);
                 $result = $studentAnswer == self::trimOption($correctAnswer);
 
                 break;
@@ -1267,10 +1266,11 @@ class FillBlanks extends Question
         switch ($type) {
             case self::FILL_THE_BLANK_MENU:
                 $listPossibleAnswers = self::getFillTheBlankMenuAnswers($correct, false);
-                $correctAnswerHtml .= "<span class='correct-answer'><strong>".$listPossibleAnswers[0].'</strong>';
+                //prevent HTML interpretation and ensure safe display
+                $correctAnswerHtml .= "<span class='correct-answer'><strong>".htmlentities($listPossibleAnswers[0]).'</strong>';
                 $correctAnswerHtml .= ' (';
                 for ($i = 1; $i < count($listPossibleAnswers); $i++) {
-                    $correctAnswerHtml .= $listPossibleAnswers[$i];
+                    $correctAnswerHtml .= htmlentities($listPossibleAnswers[$i]);
                     if ($i != count($listPossibleAnswers) - 1) {
                         $correctAnswerHtml .= ' | ';
                     }
@@ -1300,7 +1300,8 @@ class FillBlanks extends Question
 
         $result = "<span class='feedback-question'>";
         if (false === $hideUserSelection) {
-            $result .= $iconAnswer."<span class='$style'>".$answer.'</span>';
+
+            $result .= $iconAnswer."<span class='$style'>".htmlentities($answer).'</span>';
         }
         $result .= "<span class='feedback-separator'>|</span>";
         $result .= $correctAnswerHtml;

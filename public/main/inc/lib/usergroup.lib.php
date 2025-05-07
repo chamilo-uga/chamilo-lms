@@ -1821,7 +1821,7 @@ class UserGroupModel extends Model
         $form->addHtmlEditor(
             'description',
             get_lang('Description'),
-            true,
+            false,
             false,
             [
             'ToolbarSet' => 'Minimal',

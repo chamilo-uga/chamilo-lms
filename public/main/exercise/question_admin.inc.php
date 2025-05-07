@@ -39,10 +39,13 @@ if (is_object($objQuestion)) {
     // form title
     $form->addHeader($text.': '.$objQuestion->getExplanation().$code);
 
+
+
+
     // question form elements
     $objQuestion->createForm($form, $objExercise);
-
     // answer form elements
+
     $objQuestion->createAnswersForm($form);
 
     // this variable  $show_quiz_edition comes from admin.php blocks the exercise/quiz modifications
@@ -53,6 +56,8 @@ if (is_object($objQuestion)) {
     // FORM VALIDATION
     if (isset($_POST['submitQuestion']) && $form->validate()) {
         // Question
+        //Protect title html
+        $form->_submitValues['questionName'] = htmlentities($_POST['questionName']);
         $objQuestion->processCreation($form, $objExercise);
         $objQuestion->processAnswersCreation($form, $objExercise);
         // TODO: maybe here is the better place to index this tool, including answers text

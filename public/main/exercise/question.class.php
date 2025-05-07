@@ -231,8 +231,8 @@ abstract class Question
         if ('true' !== api_get_setting('editor.save_titles_as_html')) {
             return $this->question;
         }
-
         return Display::div($this->question, ['style' => 'display: inline-block;']);
+
     }
 
     public function getTitleToDisplay(Exercise $exercise, int $itemNumber): string
@@ -313,6 +313,7 @@ abstract class Question
      */
     public function updateTitle($title)
     {
+        //echo '<pre>'; var_dump($title); echo '</pre>'; exit;
         $this->question = $title;
     }
 
@@ -1145,6 +1146,7 @@ abstract class Question
      */
     public function createForm(&$form, $exercise)
     {
+
         $zoomOptions = api_get_setting('exercise.quiz_image_zoom', true);
         if (isset($zoomOptions['options'])) {
             $finderFolder = api_get_path(WEB_PATH).'vendor/studio-42/elfinder/';
@@ -1197,7 +1199,7 @@ abstract class Question
         }
 
         // question name
-        if ('true' === api_get_setting('editor.save_titles_as_html')) {
+       if ('true' === api_get_setting('editor.save_titles_as_html')) {
             $editorConfig = ['ToolbarSet' => 'TitleAsHtml'];
             $form->addHtmlEditor(
                 'questionName',
@@ -1209,7 +1211,6 @@ abstract class Question
         } else {
             $form->addText('questionName', get_lang('Question'));
         }
-
         $form->addRule('questionName', get_lang('Please type the question'), 'required');
 
         // default content

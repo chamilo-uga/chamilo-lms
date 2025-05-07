@@ -114,7 +114,7 @@ if (!empty($_GET['action']) && 'exportqti2' === $_GET['action'] && !empty($_GET[
     exit;
 }
 
-// Exercise object creation.
+ // Exercise object creation.
 if (!($objExercise instanceof Exercise)) {
     // creation of a new exercise if wrong or not specified exercise ID
     if ($exerciseId) {
@@ -155,7 +155,7 @@ if ($editQuestion || $newQuestion || $modifyQuestion || $modifyAnswers) {
     if ($editQuestion || $newQuestion) {
         // reads question data
         if ($editQuestion) {
-            // question not found
+             // question not found
             if (!$objQuestion = Question::read($editQuestion)) {
                 api_not_allowed(true);
             }

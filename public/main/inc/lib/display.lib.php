@@ -1374,6 +1374,8 @@ class Display
         // Adding edit/delete icons.
         $json .= $formatter;
 
+
+
         return $json;
     }
 

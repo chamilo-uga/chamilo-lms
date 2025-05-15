@@ -10,7 +10,7 @@ use Chamilo\CoreBundle\Component\Utils\ToolIcon;
 use Chamilo\CoreBundle\Component\Utils\ObjectIcon;
 use Chamilo\CoreBundle\Component\Utils\StateIcon;
 
-require_once __DIR__ . '/../global.inc.php';
+require_once __DIR__.'/../global.inc.php';
 
 // 1. Setting variables needed by jqgrid
 $action = $_GET['a'];
@@ -20,12 +20,12 @@ $cid = isset($_REQUEST['cid']) ? (int) $_REQUEST['cid'] : null;
 $sid = isset($_REQUEST['sid']) ? (int) $_REQUEST['sid'] : null;
 
 // Makes max row persistence after refreshing the grid
-$savedRows = Session::read('max_rows_' . $action);
+$savedRows = Session::read('max_rows_'.$action);
 if (empty($savedRows)) {
-    Session::write('max_rows_' . $action, $limit);
+    Session::write('max_rows_'.$action, $limit);
 } else {
     if ($limit != $savedRows) {
-        Session::write('max_rows_' . $action, $limit);
+        Session::write('max_rows_'.$action, $limit);
     }
 }
 
@@ -125,10 +125,10 @@ function getWhereClause($col, $oper, $val)
         $val .= '%';
     }
     if ('ew' == $oper || 'en' == $oper) {
-        $val = '%' . $val;
+        $val = '%'.$val;
     }
     if ('cn' == $oper || 'nc' == $oper || 'in' == $oper || 'ni' == $oper) {
-        $val = '%' . $val . '%';
+        $val = '%'.$val.'%';
     }
     $val = Database::escape_string($val);
 
@@ -163,7 +163,7 @@ if (($search || $forceSearch) && ('false' !== $search)) {
 
     if (!empty($whereConditionInForm)) {
         $whereCondition .= ' AND ( ';
-        $whereCondition .= '  (' . $whereConditionInForm . ') ';
+        $whereCondition .= '  ('.$whereConditionInForm.') ';
     }
     $filters = isset($_REQUEST['filters']) && !is_array($_REQUEST['filters']) ? json_decode(
         $_REQUEST['filters']
@@ -230,7 +230,7 @@ if (($search || $forceSearch) && ('false' !== $search)) {
                 $condition_array = $result['condition_array'];
                 $extraCondition = '';
                 if (!empty($condition_array)) {
-                    $extraCondition = $filters->groupOp . ' ( ';
+                    $extraCondition = $filters->groupOp.' ( ';
                     $extraCondition .= implode($filters->groupOp, $condition_array);
                     $extraCondition .= ' ) ';
                 }
@@ -246,7 +246,7 @@ if (($search || $forceSearch) && ('false' !== $search)) {
 
                 $extraQuestionCondition = '';
                 if (!empty($condition_array)) {
-                    $extraQuestionCondition = $filters->groupOp . ' ( ';
+                    $extraQuestionCondition = $filters->groupOp.' ( ';
                     $extraQuestionCondition .= implode($filters->groupOp, $condition_array);
                     $extraQuestionCondition .= ' ) ';
                     // Remove conditions already added
@@ -598,7 +598,7 @@ switch ($action) {
         }
 
         if (empty($documents)) {
-            $whereCondition .= " AND u.id = " . api_get_user_id();
+            $whereCondition .= " AND u.id = ".api_get_user_id();
             $count = get_work_user_list(
                 0,
                 $limit,
@@ -827,10 +827,10 @@ switch ($action) {
 
         if (isset($filters->filter_status)) {
             $sStatus = (int) $filters->filter_status;
-            $whereCondition .= ' AND s.status = ' . $sStatus;
+            $whereCondition .= ' AND s.status = '.$sStatus;
         } else {
             if ($listType === 'custom') {
-                $whereCondition .= ' AND (s.status IN ("' . SessionManager::STATUS_PLANNED . '", "' . SessionManager::STATUS_PROGRESS . '") ) ';
+                $whereCondition .= ' AND (s.status IN ("'.SessionManager::STATUS_PLANNED.'", "'.SessionManager::STATUS_PROGRESS.'") ) ';
             }
         }
 
@@ -1540,7 +1540,7 @@ switch ($action) {
             $whereCondition = '';
         }
 
-        $whereCondition .= " AND u.id <> " . api_get_user_id();
+        $whereCondition .= " AND u.id <> ".api_get_user_id();
 
         $sidx = in_array($sidx, $columns) ? $sidx : 'firstname';
         $result = get_work_user_list(
@@ -1580,7 +1580,7 @@ switch ($action) {
 
         $sidx = in_array($sidx, $columns) ? $sidx : 'title';
         if (empty($documents)) {
-            $whereCondition .= ' AND u.id = ' . api_get_user_id();
+            $whereCondition .= ' AND u.id = '.api_get_user_id();
             $result = get_work_user_list(
                 $start,
                 $limit,
@@ -1729,26 +1729,26 @@ switch ($action) {
 
             $overwriteColumnHeaderExport['session_access_start_date'] = get_lang('Access start date');
             $overwriteColumnHeaderExport['exe_date'] = get_lang('Start Date');
-            $overwriteColumnHeaderExport['score_percentage'] = get_lang('Score') . ' - ' . get_lang('Percentage');
-            $overwriteColumnHeaderExport['only_score'] = get_lang('Score') . ' - ' . get_lang('Note');
-            $overwriteColumnHeaderExport['total'] = get_lang('Score') . ' - ' . get_lang('Test');
+            $overwriteColumnHeaderExport['score_percentage'] = get_lang('Score').' - '.get_lang('Percentage');
+            $overwriteColumnHeaderExport['only_score'] = get_lang('Score').' - '.get_lang('Note');
+            $overwriteColumnHeaderExport['total'] = get_lang('Score').' - '.get_lang('Test');
         }
         $categoryList = TestCategory::getListOfCategoriesIDForTest($exerciseId, $courseId);
 
         if (!empty($categoryList)) {
             foreach ($categoryList as $categoryInfo) {
-                $label = 'category_' . $categoryInfo['id'];
+                $label = 'category_'.$categoryInfo['id'];
                 if ('excel' === $operation) {
-                    $columns[] = $label . '_score_percentage';
-                    $columns[] = $label . '_only_score';
-                    $columns[] = $label . '_total';
+                    $columns[] = $label.'_score_percentage';
+                    $columns[] = $label.'_only_score';
+                    $columns[] = $label.'_total';
                     $overwriteColumnHeaderExport[$label] = $categoryInfo['title'];
-                    $overwriteColumnHeaderExport[$label . '_score_percentage'] = $categoryInfo['title'] .
-                        ' - ' . get_lang('Percentage');
-                    $overwriteColumnHeaderExport[$label . '_only_score'] = $categoryInfo['title'] .
-                        ' - ' . get_lang('Note');
-                    $overwriteColumnHeaderExport[$label . '_total'] = $categoryInfo['title'] .
-                        ' - ' . get_lang('Test');
+                    $overwriteColumnHeaderExport[$label.'_score_percentage'] = $categoryInfo['title'].
+                        ' - '.get_lang('Percentage');
+                    $overwriteColumnHeaderExport[$label.'_only_score'] = $categoryInfo['title'].
+                        ' - '.get_lang('Note');
+                    $overwriteColumnHeaderExport[$label.'_total'] = $categoryInfo['title'].
+                        ' - '.get_lang('Test');
                 } else {
                     $columns[] = $label;
                 }
@@ -1891,8 +1891,8 @@ switch ($action) {
                 $detailButtons = [];
                 $detailButtons[] = Display::url(
                     $pdfIcon,
-                    api_get_path(WEB_CODE_PATH) . 'my_space/session.php?'
-                    . http_build_query(
+                    api_get_path(WEB_CODE_PATH).'my_space/session.php?'
+                    .http_build_query(
                         [
                             'action' => 'export_to_pdf',
                             'type' => 'achievement',
@@ -1904,17 +1904,17 @@ switch ($action) {
                 );
                 $detailButtons[] = Display::url(
                     Display::getMdiIcon(ObjectIcon::ASSIGNMENT, 'ch-tool-icon', null, ICON_SIZE_SMALL, get_lang('WorksReport')),
-                    api_get_path(WEB_CODE_PATH) . 'my_space/works_in_session_report.php?session=' . $session['id']
+                    api_get_path(WEB_CODE_PATH).'my_space/works_in_session_report.php?session='.$session['id']
                 );
                 $detailButtons[] = Display::url(
-                    Display::getMdiIcon(ActionIcon::VIEW_DETAILS, 'ch-tool-icon', null, ICON_SIZE_SMALL),
-                    api_get_path(WEB_CODE_PATH) . 'my_space/course.php?sid=' . $session['id']
+                    Display::getMdiIcon(ActionIcon::VIEW_DETAILS, 'ch-tool-icon', null, ICON_SIZE_SMALL,),
+                    api_get_path(WEB_CODE_PATH).'my_space/course.php?sid='.$session['id']
                 );
 
                 $item = [
                     'name' => Display::url(
                         $session['title'],
-                        api_get_path(WEB_CODE_PATH) . 'my_space/course.php?sid=' . $session['id']
+                        api_get_path(WEB_CODE_PATH).'my_space/course.php?sid='.$session['id']
                     ),
                     'date' => $dateToString,
                     'course_per_session' => $count_courses_in_session,
@@ -1946,7 +1946,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_REQUEST['origin']) && 'load_search' === $_REQUEST['origin']) {
+        if (isset($_REQUEST['origin'] ) &&  'load_search' === $_REQUEST['origin']) {
             if (!in_array($sidx, $columns)) {
                 $sidx = 'display_start_date';
                 $sord = 'DESC';
@@ -2257,7 +2257,7 @@ switch ($action) {
 
             $item['name'] = Display::url(
                 $item['name'],
-                api_get_path(WEB_CODE_PATH) . 'gradebook/index.php?sid=0&cid=' . $courseInfo['real_id']
+                api_get_path(WEB_CODE_PATH).'gradebook/index.php?sid=0&cid='.$courseInfo['real_id']
             );
 
             if (!empty($item['certif_min_score']) && !empty($item['document_id'])) {
@@ -2303,7 +2303,7 @@ switch ($action) {
         $new_result = [];
         foreach ($result as $item) {
             if (!$item['status']) {
-                $item['name'] = '<font style="color:#AAA">' . $item['name'] . '</font>';
+                $item['name'] = '<font style="color:#AAA">'.$item['name'].'</font>';
             }
             $new_result[] = $item;
         }
@@ -2317,14 +2317,14 @@ switch ($action) {
 
         $result = Database::select(
             'p.id,p.name, p.description, c.title as career, p.status',
-            "$obj->table p LEFT JOIN " . Database::get_main_table(TABLE_CAREER) . " c  ON c.id = p.career_id ",
+            "$obj->table p LEFT JOIN ".Database::get_main_table(TABLE_CAREER)." c  ON c.id = p.career_id ",
             ['order' => "$sidx $sord", 'LIMIT' => "$start , $limit"]
         );
 
         $new_result = [];
         foreach ($result as $item) {
             if (!$item['status']) {
-                $item['name'] = '<font style="color:#AAA">' . $item['name'] . '</font>';
+                $item['name'] = '<font style="color:#AAA">'.$item['name'].'</font>';
             }
             $new_result[] = $item;
         }
@@ -2463,7 +2463,7 @@ switch ($action) {
                     if (!empty($exercises[$cnt - 4]['title'])) {
                         $title = ucwords(strtolower(trim($exercises[$cnt - 4]['title'])));
                     }
-                    $columns[] = 'exer' . $i;
+                    $columns[] = 'exer'.$i;
                     $column_names[] = $title;
                     $i++;
                     break;
@@ -2508,7 +2508,7 @@ switch ($action) {
             $sessionInfo = SessionManager::fetch($listUserSess[$user['user_id']]['id_session']);
             $result[$i]['session'] = $sessionInfo['name'];
             $result[$i]['username'] = $user['username'];
-            $result[$i]['name'] = $user['lastname'] . " " . $user['firstname'];
+            $result[$i]['name'] = $user['lastname']." ".$user['firstname'];
             $j = 1;
             $finalScore = 0;
             foreach ($quizIds as $quizID) {
@@ -2516,7 +2516,7 @@ switch ($action) {
                 if (!empty($arrGrade[$user['user_id']][$quizID]) || 0 == $arrGrade[$user['user_id']][$quizID]) {
                     $finalScore += $grade = $arrGrade[$user['user_id']][$quizID];
                 }
-                $result[$i]['exer' . $j] = $grade;
+                $result[$i]['exer'.$j] = $grade;
                 $j++;
             }
 
@@ -2568,7 +2568,7 @@ switch ($action) {
         $currentUserId = api_get_user_id();
         $isAllow = api_is_allowed_to_edit();
         if (!empty($result)) {
-            $urlUserGroup = api_get_path(WEB_CODE_PATH) . 'admin/usergroup_users.php?' . api_get_cidreq();
+            $urlUserGroup = api_get_path(WEB_CODE_PATH).'admin/usergroup_users.php?'.api_get_cidreq();
             foreach ($result as $group) {
                 $countUsers = count($obj->get_users_by_usergroup($group['id']));
                 $group['users'] = $countUsers;
@@ -2576,7 +2576,7 @@ switch ($action) {
                 if (!empty($countUsers)) {
                     $group['users'] = Display::url(
                         $countUsers,
-                        $urlUserGroup . '&id=' . $group['id']
+                        $urlUserGroup.'&id='.$group['id']
                     );
                 }
 

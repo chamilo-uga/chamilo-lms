@@ -1335,7 +1335,7 @@ class Display
 
         if (('true' === api_get_setting('document.allow_compilatio_tool')) &&
             (false !== strpos($_SERVER['REQUEST_URI'], 'work/work.php') ||
-             false != strpos($_SERVER['REQUEST_URI'], 'work/work_list_all.php')
+                false != strpos($_SERVER['REQUEST_URI'], 'work/work_list_all.php')
             )
         ) {
             $json_encode = str_replace('"function () { compilatioInit() }"',
@@ -1373,8 +1373,6 @@ class Display
         $json .= "\n";
         // Adding edit/delete icons.
         $json .= $formatter;
-
-
 
         return $json;
     }
@@ -1443,7 +1441,7 @@ class Display
         }
         $active = false;
         if (('0000-00-00 00:00:00' === $session_info['access_end_date'] &&
-            '0000-00-00 00:00:00' === $session_info['access_start_date']) ||
+                '0000-00-00 00:00:00' === $session_info['access_start_date']) ||
             (empty($session_info['access_end_date']) && empty($session_info['access_start_date']))
         ) {
             if (isset($session_info['duration']) && !empty($session_info['duration'])) {
@@ -1778,16 +1776,16 @@ class Display
             <div class="py-1" role="none">';
         foreach ($elements as $item) {
             $html .= self::url(
-                    $item['title'],
-                    $item['href'],
-                    [
-                        'class' => 'text-gray-700 block px-4 py-2 text-sm',
-                        'role' => 'menuitem',
-                        'onclick' => $item['onclick'] ?? '',
-                        'data-action' => $item['data-action'] ?? '',
-                        'data-confirm' => $item['data-confirm'] ?? '',
-                    ]
-                );
+                $item['title'],
+                $item['href'],
+                [
+                    'class' => 'text-gray-700 block px-4 py-2 text-sm',
+                    'role' => 'menuitem',
+                    'onclick' => $item['onclick'] ?? '',
+                    'data-action' => $item['data-action'] ?? '',
+                    'data-confirm' => $item['data-confirm'] ?? '',
+                ]
+            );
         }
         $html .= '
             </div>
@@ -2117,7 +2115,7 @@ class Display
                 $content
                 $footer
             </div>"
-        ;
+            ;
     }
 
     /**

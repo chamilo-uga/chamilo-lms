@@ -1,0 +1,43 @@
+{% extends "@ChamiloCore/Layout/base-layout.html.twig" %}
+
+{% block chamilo_wrap %}
+
+    {%- include '@ChamiloCore/Layout/vue_setup.html.twig' %}
+
+    <section id="sectionMainContent" class="section-content">
+
+        {%- block content %}
+
+            {% if displayCategories %}
+                <h2>{{ title }}</h2>
+                {% if coursesWithCategory|length > 0 %}
+                    <div style="display: flex; flex-flow: row wrap">
+                        {% for category in coursesWithCategory %}
+                            <div style="background-color: #f7f8f9; margin: 16px; padding: 8px; border-radius: 8px; width: fit-content; border: 1px solid lightgrey; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3)">
+                                <h3 style="color: rgb(162,166,176);">{{ category.name }}</h3>
+                                {% if category.courses|length > 0 %}
+                                    <ul style='padding-left: 0.5vw;'>
+                                        {% for course in category.courses %}
+                                            <li>
+                                                <a href="/course/{{ course.id }}/home"
+                                                   style="text-decoration: underline">
+                                                    <p style="color: rgb(162,166,176);">{{ course.name }}</p>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p style="color: rgb(162,166,176);">{{ warningNoCourseInCategory }}</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>{{ warningNoCategory }}</p>
+                {% endif %}
+            {% endif %}
+        {% endblock %}
+
+    </section>
+
+{% endblock %}

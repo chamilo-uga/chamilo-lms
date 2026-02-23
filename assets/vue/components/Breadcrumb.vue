@@ -585,7 +585,7 @@ function buildManualBreadcrumbIfNeeded() {
     return true
   }
 
-  const whitelist = ["admin"]
+  const whitelist = ["admin", "user"]
   const overrides = {
     admin: "AdminIndex",
     gdpr: null,

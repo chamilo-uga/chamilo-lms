@@ -720,7 +720,7 @@ class FillBlanks extends Question
                 $listMenu = self::getFillTheBlankMenuAnswers($correctAnswer, false);
                 if ('' != $studentAnswer && isset($listMenu[0])) {
                     // First item is always the correct one.
-                    $item = $listMenu[0];
+                    $item = trim(html_entity_decode($listMenu[0])) == trim(html_entity_decode($studentAnswer, ENT_QUOTES));
                     if (!$fromDatabase) {
                         $item = sha1($item);
                         //$studentAnswer = sha1($studentAnswer);
@@ -1325,7 +1325,7 @@ class FillBlanks extends Question
 
         $result = "<span class='feedback-question'>";
         if (false === $hideUserSelection) {
-            $result .= $iconAnswer."<span class='$style'>".$answer.'</span>';
+            $result .= $iconAnswer."<span class='$style'>".api_htmlentities($answer).'</span>';
         }
         $result .= "<span class='feedback-separator'>|</span>";
         $result .= $correctAnswerHtml;

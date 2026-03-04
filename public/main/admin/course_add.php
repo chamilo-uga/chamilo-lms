@@ -34,16 +34,26 @@ $form = new FormValidator('update_course');
 $form->addElement('header', $tool_name);
 
 // Title
-$form->addText(
-    'title',
-    get_lang('Title'),
-    true,
-    [
-        'aria-label' => get_lang('Title'),
-    ]
-);
-$form->applyFilter('title', 'html_filter');
-$form->applyFilter('title', 'trim');
+if ('true' === api_get_setting('editor.save_titles_as_html')) {
+    $form->addHtmlEditor(
+        'title',
+        get_lang('Title'),
+        true,
+        false,
+        ['ToolbarSet' => 'TitleAsHtml']
+    );
+} else {
+    $form->addText(
+        'title',
+        get_lang('Title'),
+        true,
+        [
+            'aria-label' => get_lang('Title'),
+        ]
+    );
+    $form->applyFilter('title', 'html_filter');
+    $form->applyFilter('title', 'trim');
+}
 
 // Code
 $form->addText(

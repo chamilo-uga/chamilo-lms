@@ -370,6 +370,34 @@ import { useUserSessionSubscription } from "../../composables/userPermissions"
 import { useLocale } from "../../composables/locale"
 import courseService from "../../services/courseService"
 
+/**
+ * display text with entities decoded
+ * @param html
+ * @returns {string}
+ */
+function decodeHTML(html) {
+  if (platformConfigStore.getSetting("editor.save_titles_as_html") === 'false') {
+    return html;
+  }
+  html = stripHtml(html)
+  const txt = document.createElement("textarea")
+  txt.innerHTML = html
+  return txt.value
+}
+
+/**
+ * remove tags without decoding entities
+ * @param html
+ * @returns {string}
+ */
+function stripHtml(html) {
+  html = html.replace(/&/g, '{²#²}');
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  let text = div.textContent || "";
+  return text.replace(/{²#²}/g, '&');
+}
+
 function createStudentInfoBatcher() {
   const cache = shallowReactive(new Map()) // key -> studentInfo
   const pendingBySid = new Map() // sid -> Set(courseId)
@@ -639,7 +667,10 @@ watch(showNotifications, (open) => {
 
 const { getOriginalLanguageName, getLanguageName } = useLocale()
 
-const courseTitle = computed(() => String(props.course?.title ?? ""))
+const courseTitle = computed(() => {
+  const rawTitle = String(props.course?.title ?? "")
+  return decodeHTML(rawTitle)
+})
 
 function extractNumericId(value) {
   if (typeof value === "number" && Number.isFinite(value)) return value

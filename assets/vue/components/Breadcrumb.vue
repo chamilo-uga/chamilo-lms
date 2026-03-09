@@ -493,7 +493,7 @@ watchEffect(() => {
   // Standard: add course title crumb
   if (course.value && route.name !== "CourseHome") {
     calculatedList.value.push({
-      label: course.value.title,
+      label: course.value.title+"TRALALA",
       route: { name: "CourseHome", params: { id: course.value.id }, query: route.query },
     })
   }

@@ -754,7 +754,9 @@ class AddCourse
         global $error_msg;
         $title = $params['title'];
         // Fix amp
-        $title = str_replace('&amp;', '&', $title);
+        if (api_get_setting('editor.save_titles_as_html') !== 'true') {
+            $title = str_replace('&amp;', '&', $title);
+        }
         $code = $params['code'];
         $visual_code = $params['visual_code'];
         $directory = $params['directory'];

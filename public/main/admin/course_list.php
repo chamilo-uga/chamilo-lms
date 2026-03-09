@@ -181,9 +181,17 @@ function get_course_data(
 
         // Place colour icons in front of courses.
         $show_visual_code = $course['visual_code'] != $course['col2'] ? Display::label($course['visual_code'], 'info') : null;
-        $course['col1'] = get_course_visibility_icon($courseInfo['visibility']).\PHP_EOL
-            .Display::url(Security::remove_XSS($course['col1']), $courseInfo['course_public_url']).\PHP_EOL
-            .$show_visual_code;
+        // title
+        if (api_get_setting('editor.save_titles_as_html') === 'true') {
+            $course['col1'] = get_course_visibility_icon($courseInfo['visibility']).\PHP_EOL
+                .Display::url(Security::remove_XSS(strip_tags($course['col1'])), $courseInfo['course_public_url']).\PHP_EOL
+                .$show_visual_code;
+        } else {
+            $course['col1'] = get_course_visibility_icon($courseInfo['visibility']).\PHP_EOL
+                .Display::url(Security::remove_XSS($course['col1']), $courseInfo['course_public_url']).\PHP_EOL
+                .$show_visual_code;
+        }
+
         $course['col5'] = SUBSCRIBE_ALLOWED == $course['col5'] ? get_lang('Yes') : get_lang('No');
         $course['col6'] = UNSUBSCRIBE_ALLOWED == $course['col6'] ? get_lang('Yes') : get_lang('No');
 

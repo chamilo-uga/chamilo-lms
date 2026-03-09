@@ -115,9 +115,20 @@ $form->addElement('header', get_lang('Course').'  #'.$courseInfo['real_id'].' '.
 $form->addElement('hidden', 'code', $course_code);
 
 //title
-$form->addText('title', get_lang('Title'), true);
-$form->applyFilter('title', 'html_filter');
-$form->applyFilter('title', 'trim');
+if ('true' === api_get_setting('editor.save_titles_as_html')) {
+    $form->addHtmlEditor(
+        'title',
+        get_lang('Title'),
+        true,
+        false,
+        ['ToolbarSet' => 'TitleAsHtml']
+    );
+} else {
+    $form->addText('title', get_lang('Title'), true);
+    $form->applyFilter('title', 'html_filter');
+    $form->applyFilter('title', 'trim');
+}
+
 
 // Code
 $element = $form->addElement(

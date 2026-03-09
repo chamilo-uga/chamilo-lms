@@ -116,6 +116,7 @@ class PlatformConfigurationController extends AbstractController
                 'admin.administrator_surname',
                 'editor.enabled_mathjax',
                 'editor.translate_html',
+                'editor.save_titles_as_html',
                 'display.show_admin_toolbar',
                 'registration.allow_terms_conditions',
                 'agenda.allow_personal_agenda',
@@ -199,7 +200,6 @@ class PlatformConfigurationController extends AbstractController
 
             $configuration['settings'][$variable] = $value;
         }
-
         return new JsonResponse($configuration);
     }
 
